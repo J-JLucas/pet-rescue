@@ -22,6 +22,8 @@ app.use(express.json());
 
 const sql = postgres('postgresql://dev:dev@localhost:5432/pet_adoption');
 
+
+/* Return All Cats */
 app.get('/api/cats', async (req, res) => {
   try {
     const cats = await sql`
@@ -36,6 +38,7 @@ app.get('/api/cats', async (req, res) => {
   }
 });
 
+/* Return Cat by ID */
 app.get('/api/cats/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,6 +56,8 @@ app.get('/api/cats/:id', async (req, res) => {
   }
 });
 
+
+/* Insert Cat into DB */
 app.post('/api/cats', async (req, res) => {
   try {
     const { name, birthday, sex, bio, photos, } = req.body;
@@ -68,6 +73,39 @@ app.post('/api/cats', async (req, res) => {
     res.status(500).json({ error: 'Failed to create cat' });
   }
 });
+
+
+/* Update cat in DB */
+app.put('/api/cats/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, birthday, sex, bio, photos, status } = req.body;
+
+    const result = await sql`
+      UPDATE cats
+      SET name = ${name},
+          birthday = ${birthday},
+          sex = ${sex},
+          bio = ${bio},
+          photos = ${photos},
+          status = ${status},
+          updated_at = NOW()
+      WHERE id = ${id}
+      RETURNING *
+    `;
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: 'Cat not found' });
+    }
+
+    res.json(result[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update cat' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

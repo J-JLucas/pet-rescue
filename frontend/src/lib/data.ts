@@ -1,17 +1,30 @@
-// get cat data by id
-app.get('/api/cats/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const cats = await sql`
-      SELECT * FROM cats
-      WHERE id = ${id}
-    `;
-    if (cats.length === 0) {
-      return res.status(404).json({ error: 'Cat not found' });
-    }
-    res.json(cats[0]);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch cat' });
-  }
-});
+import type { Cat } from "@/lib/definitions";
+
+/* get all cats */
+export async function fetchAllCats(): Promise<Cat[]> {
+  const res = await fetch(`/api/cats`);
+
+  if (!res.ok) throw new Error(`Failed to fetch cats`);
+
+  return res.json();
+}
+
+/* get cat data by id */
+export async function fetchCatById(id: string): Promise<Cat> {
+  const res = await fetch(`/api/cats/${id}`);
+
+  if (!res.ok) throw new Error(`Failed to fetch cat ${id}`);
+
+  return res.json();
+}
+
+
+/* update cat data by id */
+export async function updateCat(id: string, data: Partial<Cat>): Promise<boolean> {
+  const res = await fetch(`/api/cats/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}

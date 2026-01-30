@@ -12,10 +12,11 @@ const styles = {
   header: {
     backgroundColor: '#058743',
     color: 'white',
+    marginBottom: '25px',
     padding: '1rem',
   },
   title: {
-    fontSize: '3rem',
+    fontSize: '2rem',
     textAlign: 'center',
 
   },

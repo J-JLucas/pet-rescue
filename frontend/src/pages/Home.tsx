@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CatCard } from '@/components/PetStubCard';
 import type { Cat } from '@/lib/definitions';
-
+import { fetchAllCats } from '@/lib/data';
 import '@/pages/Home.css'
 
 export function Home() {
@@ -10,16 +10,17 @@ export function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/cats')
-      .then((res) => res.json())
-      .then((data) => {
+    async function loadCats() {
+      try {
+        const data = await fetchAllCats();
         setCats(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
+      } finally {
         setLoading(false);
-      });
+      }
+    }
+    loadCats();
   }, []);
 
   return (
