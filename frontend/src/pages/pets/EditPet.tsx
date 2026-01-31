@@ -53,7 +53,7 @@ export function EditPet() {
         photos: form.photos ? form.photos.split(',').map(p => p.trim()) : [],
       });
       if (success) {
-        navigate(`/cats/${id}`);
+        navigate(`/pets/${id}`);
       } else {
         console.error('Failed to update cat');
       }

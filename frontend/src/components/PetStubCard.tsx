@@ -7,7 +7,7 @@ export function CatCard({ cat }: { cat: Cat }) {
   const photo = cat.photos[0];
 
   return (
-    <Link to={`/cats/${cat.id}`} state={{ cat }} style={styles.link}>
+    <Link to={`/pets/${cat.id}`} state={{ cat }} style={styles.link}>
       <div style={styles.card}>
         <div style={styles.imageContainer}>
           {photo ? (
@@ -18,7 +18,7 @@ export function CatCard({ cat }: { cat: Cat }) {
             />
           ) : (
             <div style={styles.noPhoto}>
-              No photo
+              Photo coming soon!
             </div>
           )}
         </div>

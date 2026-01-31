@@ -45,7 +45,7 @@ export function CatProfile() {
             <img src={cat.photos[0]} alt={cat.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af' }}>
-              No photo
+              Photos coming soon!
             </div>
           )}
         </div>
@@ -58,7 +58,7 @@ export function CatProfile() {
             </span>
           )}
           <p style={{ fontSize: '2rem', color: '#1f2937', lineHeight: 1.6 }}>{cat.bio}</p>
-          <a href={`/cats/${cat.id}/edit`}>Edit</a>
+          <a href={`/pets/${cat.id}/edit`}>Edit</a>
         </div>
       </div>
     </Layout>

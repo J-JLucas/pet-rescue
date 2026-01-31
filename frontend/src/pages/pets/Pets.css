@@ -1,0 +1,14 @@
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1400px;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .cat-grid {
+    grid-template-columns: 1fr;
+  }
+}
