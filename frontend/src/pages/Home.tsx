@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
 import { Layout } from '@/components/Layout';
-import { CatCard } from '@/components/PetStubCard';
-import type { Cat } from '@/lib/definitions';
-import { fetchAllCats } from '@/lib/data';
 import '@/pages/Home.css'
 
 export function Home() {
   return (
     <Layout>
+      <img src="catcouple.jpg" alt='Two cute cats cuddling' className='hero-image' />
+      <div className='home-card'>
+        <h1 className='subheading'>You Can Make a Difference!</h1>
+        <p></p>
+      </div>
     </Layout>
   );
 }

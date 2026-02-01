@@ -3,7 +3,7 @@ import { Layout } from '@/components/Layout';
 import { CatCard } from '@/components/PetStubCard';
 import type { Cat } from '@/lib/definitions';
 import { fetchAllCats } from '@/lib/data';
-import '@/pages/Home.css'
+import '@/pages/pets/Pets.css'
 
 export function Pets() {
   const [cats, setCats] = useState<Cat[]>([]);

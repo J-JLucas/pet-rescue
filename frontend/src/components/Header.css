@@ -1,7 +1,9 @@
 .header {
-  background-color: #058743;
+  /*background-color: #bfe3b4;
+  background-color: #f2dbe0;
+  */
+  background-color: #e8c0cb;
   color: white;
-  margin-bottom: 25px;
   padding: 3rem;
   display: flex;
   align-items: center;
