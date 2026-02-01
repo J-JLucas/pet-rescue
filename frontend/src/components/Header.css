@@ -2,6 +2,11 @@
   /*background-color: #bfe3b4;
   background-color: #f2dbe0;
   */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   background-color: #e8c0cb;
   color: white;
   padding: 3rem;
@@ -9,6 +14,10 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+body {
+  padding-top: 150px;
 }
 
 .title {
