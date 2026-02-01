@@ -1,5 +1,6 @@
 .hero-image {
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .home-card {
@@ -8,7 +9,19 @@
 
 .subheading {
   text-align: center;
+  font-size: 48px;
   color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.mission-body {
+  text-align: center;
+  font-size: 32px;
+  color: white;
+  width: 600px;
+  margin: 0 auto;
+  padding-bottom: 50px;
 }
 
 @media (max-width: 768px) {}
