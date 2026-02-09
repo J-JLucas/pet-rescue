@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { addPet } from "@/lib/data";
 
 export function AddPet() {
   const navigate = useNavigate();
@@ -13,30 +14,23 @@ export function AddPet() {
     photos: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement
-    | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const res = await fetch('http://localhost:3000/api/cats', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          birthday: form.birthday || null,
-          photos: form.photos ? form.photos.split(',').map(p => p.trim()) : [],
-        }),
+      const success = await addPet({
+        ...form,
+        birthday: form.birthday || null,
+        photos: form.photos ? form.photos.split(',').map(p => p.trim()) : [],
       });
-
-      if (res.ok) {
-        navigate('/');
+      if (success) {
+        navigate('/pets');
       } else {
-        console.error('Failed to add cat');
+        console.error('Failed to add pet');
       }
     } catch (err) {
       console.error(err);
@@ -59,7 +53,13 @@ export function AddPet() {
             required
           />
         </label>
-
+        <label>
+          Type
+          <select name="pet_type" value={form.pet_type} onChange={handleChange}>
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+          </select>
+        </label>
         <label>
           Birthday
           <input
@@ -69,7 +69,6 @@ export function AddPet() {
             onChange={handleChange}
           />
         </label>
-
         <label>
           Sex
           <select name="sex" value={form.sex} onChange={handleChange}>
@@ -78,7 +77,6 @@ export function AddPet() {
             <option value="female">Female</option>
           </select>
         </label>
-
         <label>
           Bio
           <textarea
@@ -88,7 +86,6 @@ export function AddPet() {
             rows={4}
           />
         </label>
-
         <label>
           Photos (comma-separated URLs)
           <input
@@ -96,13 +93,13 @@ export function AddPet() {
             name="photos"
             value={form.photos}
             onChange={handleChange}
-            placeholder="/cats/photo1.jpg, /cats/photo2.jpg"
+            placeholder="/pets/photo1.jpg, /pets/photo2.jpg"
           />
         </label>
         <button type="submit" disabled={loading}>
-          {loading ? 'Adding...' : 'Add Cat'}
+          {loading ? 'Adding...' : 'Add Pet'}
         </button>
       </form>
     </Layout>
   );
-} 
+}

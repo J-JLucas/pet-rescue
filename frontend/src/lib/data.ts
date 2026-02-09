@@ -1,27 +1,37 @@
-import type { Cat } from "@/lib/definitions";
+import type { Pet } from "@/lib/definitions";
 
-/* get all cats */
-export async function fetchAllCats(): Promise<Cat[]> {
-  const res = await fetch(`/api/cats`);
+/* get all pets*/
+export async function fetchAllPets(): Promise<Pet[]> {
+  const res = await fetch(`/api/pets`);
 
-  if (!res.ok) throw new Error(`Failed to fetch cats`);
-
-  return res.json();
-}
-
-/* get cat data by id */
-export async function fetchCatById(id: string): Promise<Cat> {
-  const res = await fetch(`/api/cats/${id}`);
-
-  if (!res.ok) throw new Error(`Failed to fetch cat ${id}`);
+  if (!res.ok) throw new Error(`Failed to fetch pets`);
 
   return res.json();
 }
 
+/* get pet data by id */
+export async function fetchPetById(id: string): Promise<Pet> {
+  const res = await fetch(`/api/pets/${id}`);
 
-/* update cat data by id */
-export async function updateCat(id: string, data: Partial<Cat>): Promise<boolean> {
-  const res = await fetch(`/api/cats/${id}`, {
+  if (!res.ok) throw new Error(`Failed to fetch pet ${id}`);
+
+  return res.json();
+}
+
+/* insert pet */
+export async function addPet(data: Partial<Pet>): Promise<boolean> {
+  const res = await fetch(`/api/pets`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
+
+/* update pet data by id */
+export async function updatePet(id: string, data: Partial<Pet>): Promise<boolean> {
+  const res = await fetch(`/api/pets/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

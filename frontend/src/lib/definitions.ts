@@ -1,6 +1,7 @@
-export type Cat = {
+export type Pet = {
   id: string;
   name: string;
+  pet_type: 'cat' | 'dog';
   birthday: string | null;
   sex: 'male' | 'female' | 'unknown';
   bio: string;
@@ -9,5 +10,4 @@ export type Cat = {
   created_at: string;
   updated_at: string;
 };
-
 

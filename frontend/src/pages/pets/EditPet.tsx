@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
-import { fetchCatById, updateCat } from "@/lib/data";
+import { fetchPetById, updatePet } from "@/lib/data";
 
 export function EditPet() {
   const { id } = useParams();
@@ -18,9 +18,9 @@ export function EditPet() {
   });
 
   useEffect(() => {
-    async function loadCat() {
+    async function loadPet() {
       try {
-        const data = await fetchCatById(id);
+        const data = await fetchPetById(id);
         setForm({
           name: data.name || '',
           birthday: data.birthday?.split('T')[0] || '',
@@ -36,7 +36,7 @@ export function EditPet() {
         setLoading(false);
       }
     }
-    loadCat();
+    loadPet();
   }, [id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -47,7 +47,7 @@ export function EditPet() {
     e.preventDefault();
     setSaving(true);
     try {
-      const success = await updateCat(id, {
+      const success = await updatePet(id, {
         ...form,
         birthday: form.birthday || null,
         photos: form.photos ? form.photos.split(',').map(p => p.trim()) : [],
@@ -55,7 +55,7 @@ export function EditPet() {
       if (success) {
         navigate(`/pets/${id}`);
       } else {
-        console.error('Failed to update cat');
+        console.error('Failed to update pet');
       }
     } catch (err) {
       console.error(err);
@@ -113,7 +113,7 @@ export function EditPet() {
             name="photos"
             value={form.photos}
             onChange={handleChange}
-            placeholder="/cats/photo1.jpg, /cats/photo2.jpg"
+            placeholder="/pets/photo1.jpg, /pets/photo2.jpg"
           />
         </label>
         <label>

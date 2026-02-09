@@ -1,19 +1,19 @@
 import { calculateAge } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import type { Cat } from "@/lib/definitions";
+import type { Pet } from "@/lib/definitions";
 
-export function CatCard({ cat }: { cat: Cat }) {
-  const age = calculateAge(cat.birthday);
-  const photo = cat.photos[0];
+export function PetCard({ pet }: { pet: Pet }) {
+  const age = calculateAge(pet.birthday);
+  const photo = pet.photos[0];
 
   return (
-    <Link to={`/pets/${cat.id}`} state={{ cat }} style={styles.link}>
+    <Link to={`/pets/${pet.id}`} state={{ pet }} style={styles.link}>
       <div style={styles.card}>
         <div style={styles.imageContainer}>
           {photo ? (
             <img
               src={photo}
-              alt={cat.name}
+              alt={pet.name}
               style={styles.image}
             />
           ) : (
@@ -23,9 +23,9 @@ export function CatCard({ cat }: { cat: Cat }) {
           )}
         </div>
         <div style={styles.content}>
-          <h2 style={styles.name}>{cat.name}</h2>
+          <h2 style={styles.name}>{pet.name}</h2>
           <p style={styles.age}>{age}</p>
-          {cat.status === 'pending' && (
+          {pet.status === 'pending' && (
             <span style={styles.pendingBadge}>
               Adoption pending
             </span>
