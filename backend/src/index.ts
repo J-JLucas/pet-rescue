@@ -2,9 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import postgres from 'postgres';
 
-type Cat = {
+type Pet = {
   id: string;
   name: string;
+  pet_type: 'cat' | 'dog';
   birthday: string | null;
   sex: 'male' | 'female' | 'unknown';
   bio: string;
@@ -23,67 +24,68 @@ app.use(express.json());
 const sql = postgres('postgresql://dev:dev@localhost:5432/pet_adoption');
 
 
-/* Return All Cats */
-app.get('/api/cats', async (req, res) => {
+/* Return all pets */
+app.get('/api/pets', async (req, res) => {
   try {
-    const cats = await sql`
-      SELECT * FROM cats
+    const pets = await sql`
+      SELECT * FROM pets
       WHERE status != 'adopted'
       ORDER BY created_at DESC
     `;
-    res.json(cats);
+    res.json(pets);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to fetch cats' });
+    res.status(500).json({ error: 'Failed to fetch pets' });
   }
 });
 
-/* Return Cat by ID */
-app.get('/api/cats/:id', async (req, res) => {
+/* Return pet by ID */
+app.get('/api/pets/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const cats = await sql`
-      SELECT * FROM cats
+    const pets = await sql`
+      SELECT * FROM pets
       WHERE id = ${id}
     `;
-    if (cats.length === 0) {
-      return res.status(404).json({ error: 'Cat not found' });
+    if (pets.length === 0) {
+      return res.status(404).json({ error: 'Pet not found' });
     }
-    res.json(cats[0]);
+    res.json(pets[0]);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to fetch cat' });
+    res.status(500).json({ error: 'Failed to fetch pet' });
   }
 });
 
 
-/* Insert Cat into DB */
-app.post('/api/cats', async (req, res) => {
+/* Insert pet into DB */
+app.post('/api/pets', async (req, res) => {
   try {
-    const { name, birthday, sex, bio, photos, } = req.body;
+    const { name, pet_type, birthday, sex, bio, photos, } = req.body;
 
     const result = await sql`
-      INSERT INTO cats (name, birthday, sex, bio, photos, status)
-      VALUES (${name}, ${birthday}, ${sex}, ${bio}, ${photos}, 'available')
+      INSERT INTO pets (name, pet_type, birthday, sex, bio, photos, status)
+      VALUES (${name}, ${pet_type}, ${birthday}, ${sex}, ${bio}, ${photos}, 'available')
       RETURNING *
     ;`
     res.status(201).json(result[0]);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to create cat' });
+    res.status(500).json({ error: 'Failed to create pet' });
   }
 });
 
 
-/* Update cat in DB */
-app.put('/api/cats/:id', async (req, res) => {
+/* Update pet in DB */
+app.put('/api/pets/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, birthday, sex, bio, photos, status } = req.body;
+    const { name, pet_type, birthday, sex, bio, photos, status } = req.body;
 
     const result = await sql`
-      UPDATE cats
+      UPDATE pets
       SET name = ${name},
+          pet_type = ${pet_type},
           birthday = ${birthday},
           sex = ${sex},
           bio = ${bio},
@@ -95,16 +97,15 @@ app.put('/api/cats/:id', async (req, res) => {
     `;
 
     if (result.length === 0) {
-      return res.status(404).json({ error: 'Cat not found' });
+      return res.status(404).json({ error: 'Pet not found' });
     }
 
     res.json(result[0]);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to update cat' });
+    res.status(500).json({ error: 'Failed to update pet' });
   }
 });
-
 
 
 app.listen(port, () => {
