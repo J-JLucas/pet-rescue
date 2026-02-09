@@ -10,6 +10,7 @@ export function EditPet() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     name: '',
+    pet_type: 'cat',
     birthday: '',
     sex: 'unknown',
     bio: '',
@@ -23,6 +24,7 @@ export function EditPet() {
         const data = await fetchPetById(id);
         setForm({
           name: data.name || '',
+          pet_type: data.pet_type || 'cat',
           birthday: data.birthday?.split('T')[0] || '',
           sex: data.sex || 'unknown',
           bio: data.bio || '',
@@ -31,8 +33,7 @@ export function EditPet() {
         });
       } catch (err) {
         console.error(err);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     }
@@ -79,6 +80,13 @@ export function EditPet() {
             onChange={handleChange}
             required
           />
+        </label>
+        <label>
+          Type
+          <select name="pet_type" value={form.pet_type} onChange={handleChange}>
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+          </select>
         </label>
         <label>
           Birthday

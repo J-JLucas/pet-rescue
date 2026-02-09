@@ -8,6 +8,7 @@ export function AddPet() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '',
+    pet_type: 'cat',
     birthday: '',
     sex: 'unknown',
     bio: '',
