@@ -52,15 +52,6 @@ async function seed() {
       status: 'pending',
     },
     {
-      name: 'Buddy',
-      pet_type: 'dog',
-      birthday: '2021-05-20',
-      sex: 'male',
-      bio: 'Energetic golden retriever who loves fetch and belly rubs.',
-      photos: ['/pets/buddy-1.jpg'],
-      status: 'available',
-    },
-    {
       name: 'Mystery',
       pet_type: 'cat',
       birthday: null,
